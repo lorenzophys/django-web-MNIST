@@ -1,0 +1,49 @@
+{% extends 'routes/base.html' %}
+
+{% block title %}Web MNIST - Home{% endblock %}
+
+{% block page_header %}Halo! Welcome to Web-MNIST{% endblock page_header %}
+
+{% block page_content %}
+    <div class="row">
+        <p class="lead text-center">Draw a digit in the box and let the neural network evaluate it.</p>
+    </div>
+    <main class="container">
+        <div class="row row-cols-1 row-cols-md-2 mb-2 text-center">
+            <div class="col">
+                <div class="card mb-4 shadow-sm">
+                    <div class="card-header" style="background-image: linear-gradient(to bottom,#acdec3 0,#70d9aa 100%);">
+                        <h4 class="my-0 fw-normal" style="color: #0C4B33"><b>Draw here</b></h4>
+                    </div>
+                    <div class="card-body">
+                        {% csrf_token %}
+                        <canvas id="canvas" width="280" height="280" style="border:1px solid #0C4B33;"></canvas>
+                    </div>
+                </div>
+            </div>
+            <div class="col">
+                <div class="card mb-4 shadow-sm">
+                    <div class="card-header" style="background-image: linear-gradient(to bottom,#acdec3 0,#70d9aa 100%);">
+                        <h4 class="my-0 fw-normal" style="color: #0C4B33"><b>Prediction</b></h4>
+                    </div>
+                    <div class="card-body">
+                        <canvas id="predictionCanvas" width="280" height="280" style="border:1px solid #0C4B33;"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="d-grid gap-2">
+            <button id="evalButton" class="btn btn-success btn-lg" style="background: #106644; " type="button"><b>Evaluate</b></button>
+            <button id="clearButton" class="btn btn-success btn-lg" style="background-color: white; color: #106644" type="button"><b>Clear</b></button>
+        </div>
+    </main>
+{% endblock page_content %}
+
+{% block scripts %}
+    {{ block.super }}
+
+    {% load static %}
+    <script src="{% static 'jquery-3.5.1.js' %}"></script>
+    <script src="{% static 'canvas_handler.js' %}"></script>
+    <script src="{% static 'eval_handler.js' %}"></script>
+{% endblock scripts %}
